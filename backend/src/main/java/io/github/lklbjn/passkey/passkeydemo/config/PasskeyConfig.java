@@ -32,7 +32,7 @@ public class PasskeyConfig {
                         .name("PassKeyDemo")
                         .build())
                 .credentialRepository(credentialRepo)
-                .origins(new HashSet<>(List.of("http://localhost:8080"))) // 允许的前端源
+                .origins(new HashSet<>(List.of("http://localhost:8080","http://localhost:8193"))) // 允许的前端源
                 .build();
     }
 
