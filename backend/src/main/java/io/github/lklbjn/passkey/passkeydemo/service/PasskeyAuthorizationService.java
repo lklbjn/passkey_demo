@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -63,6 +64,8 @@ public class PasskeyAuthorizationService {
                 .build());
         try {
             stringRedisTemplate.opsForHash().put(REDIS_PASSKEY_REGISTRATION_KEY, String.valueOf(user.getId()), options.toJson());
+            // 设置5分钟的过期时间
+            stringRedisTemplate.expire(REDIS_PASSKEY_REGISTRATION_KEY, Duration.ofMinutes(5));
             return options.toCredentialsCreateJson();
         } catch (JsonProcessingException e) {
             return "";
@@ -109,6 +112,8 @@ public class PasskeyAuthorizationService {
         var options = relyingParty.startAssertion(StartAssertionOptions.builder().build());
 
         stringRedisTemplate.opsForHash().put(REDIS_PASSKEY_ASSERTION_KEY, identifier, options.toJson());
+        // 设置5分钟的过期时间
+        stringRedisTemplate.expire(REDIS_PASSKEY_ASSERTION_KEY, Duration.ofMinutes(5));
 
         return options.toCredentialsGetJson();
     }
