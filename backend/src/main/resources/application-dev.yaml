@@ -24,4 +24,10 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     call-setters-on-nulls: true
 
+passkey:
+  id: "passkey.ciallo.io"
+  name: "PassKeyDemo"
+  origins:
+    - "http://localhost:8080"
+    - "http://localhost:8193"
 
